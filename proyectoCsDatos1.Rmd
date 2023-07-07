@@ -1,0 +1,65 @@
+---
+title: "Proyecto Ciencia de Datos I"
+author: "Maxi Urso"
+date: "2023-07-03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Importo librerías
+```{r message=FALSE}
+library(tidyverse)
+library(sf)
+```
+
+
+#Levanto base
+```{r message=FALSE}
+escuelas <- read_csv('data/establecimientos_educativos_WGS84.csv')
+summary(escuelas)
+```
+
+#Levanto geojson
+```{r message=FALSE}
+escuelas_geojson <- st_read("data/establecimientos_educativos_WGS84.geojson",
+                     stringsAsFactors = TRUE)
+```
+
+#Levanto shp
+```{r}
+distritos <- st_read("data/distritos-escolares.geojson",
+                     stringsAsFactors = TRUE)
+```
+
+#Quiero graficar cantidad de escuelas por distrito escolar
+```{r}
+cant_escuelas_de <- escuelas %>% 
+  group_by(de) %>% 
+  summarise(cantidad = n())
+```
+
+#Al dataset de distritos le uno el de cantidad de escuelas
+
+```{r}
+distritos <- left_join(distritos,cant_escuelas_de, by= c("ID"="de"))
+
+```
+
+Hago un mapa coroplético con la cantidad de escuelas por distrito escolar
+
+```{r}
+ggplot()+
+  geom_sf(data=distritos, aes(fill=cantidad))+
+    scale_fill_distiller(palette = "RdYlGn", direction = 1)+ #El direction 1 da vuelta la paleta de colores
+      labs(title="Cantidad de escuelas por DE",
+       fill="")
+```
+
+
+
+
+#Podría obtener datos de población y sacar una relación de escuelas por población
+
