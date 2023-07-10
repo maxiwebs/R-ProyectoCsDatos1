@@ -1,18 +1,9 @@
 ---
 title: "Proyecto Ciencia de Datos I"
 author: "Maxi Urso"
-date: "2023-07-09"
+date: "2023-07-03"
 output: html_document
 ---
-
-Voy a trabajar con la base de datos de establecimientos educativos disponible en BA Data.
-
-Además si bien el join no es algo que vimos en este módulo, para poder hacer algunas operaciones extra, voy a unirla con la base de datos del censo 2010 para amba facilitada en este curso.
-
-Los datos están disponibles en el repositorio git:
-
-
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -327,3 +318,71 @@ ggplot(escuelas_priv_agrup_comuna_censo, aes(y = reorder(nombre,comuna))) +
   scale_fill_manual(values = c("Mil viviendas" = "steelblue", "Mil habitantes" = "darkorange")) +
   ggtitle("Cantidad de escuelas privadas por habitantes y viviendas por Comuna")
 ```
+
+
+
+
+
+
+#Levanto shp
+```{r}
+distritos <- st_read("data/distritos-escolares.geojson",
+                     stringsAsFactors = TRUE)
+```
+
+#Quiero graficar cantidad de escuelas por distrito escolar
+```{r}
+cant_escuelas_de <- escuelas %>% 
+  group_by(de) %>% 
+  summarise(cantidad = n())
+```
+
+#Al dataset de distritos le uno el de cantidad de escuelas
+
+```{r}
+distritos <- left_join(distritos,cant_escuelas_de, by= c("ID"="de"))
+
+```
+
+Hago un mapa coroplético con la cantidad de escuelas por distrito escolar
+
+```{r}
+ggplot()+
+  geom_sf(data=distritos, aes(fill=cantidad))+
+    scale_fill_distiller(palette = "RdYlGn", direction = 1)+ #El direction 1 da vuelta la paleta de colores
+      labs(title="Cantidad de escuelas por DE",
+       fill="")
+```
+
+```{r}
+#Usando GGMAP
+library(ggmap)
+
+##Creo una caja de coordenadas
+#Las calcula en base a el dataset de barrios de CABA
+
+bbox_caba <- st_bbox(distritos)
+print(bbox_caba)
+
+#Paso a numéricos el bbox
+bbox_caba <- as.numeric(bbox_caba)
+mapa_caba <- get_stamenmap(bbox = as.numeric(bbox_caba), #Repito pero no hace falta
+                           maptype = "terrain", #Estilo de mapa
+                           zoom=13)
+
+#Ploteo mapa base
+#ggmap(mapa_caba)
+```
+```{r}
+ggmap(mapa_caba)+
+  geom_sf(data=distritos, aes(fill=cantidad), color=NA, inherit.aes=FALSE, alpha=0.8)+ #El inherit.aes es para que no choque el geom_sf con el ggmap
+    labs(title = "Cantidad de escuelas por DE",
+         fill = "Cantidad escuelas")+
+  scale_fill_distiller(palette = "RdYlGn",direction=1)+
+  theme_void()
+```
+
+
+
+#Podría obtener datos de población y sacar una relación de escuelas por población
+
