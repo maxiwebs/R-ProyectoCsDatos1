@@ -2,12 +2,15 @@
 title: "Proyecto Ciencia de Datos I"
 author: "Maxi Urso"
 date: "2023-07-09"
-output: github_document
+#output: github_document
+output: html_document
 ---
 
 Voy a trabajar con la base de datos de establecimientos educativos disponible en BA Data.
 
-Además si bien el join no es algo que vimos en este módulo, para poder hacer algunas operaciones extra, voy a unirla con la base de datos del censo 2010 para amba facilitada en este curso.
+**La idea es ver cómo se distribuyen los establecimientos educativos en las comunas de la Ciudad de Buenos Aires**
+
+Además, si bien el join no es algo que vimos en este módulo, para poder hacer algunas operaciones extra voy a unirla con la base de datos del censo 2010 para AMBA facilitada en este curso para calcular la cantidad de escuelas por cantidad de habitantes y viviendas.
 
 Los datos están disponibles en el [repositorio git](https://github.com/maxiwebs/R-ProyectoCsDatos1/).
 
@@ -327,3 +330,32 @@ ggplot(escuelas_priv_agrup_comuna_censo, aes(y = reorder(nombre,comuna))) +
   scale_fill_manual(values = c("Mil viviendas" = "steelblue", "Mil habitantes" = "darkorange")) +
   ggtitle("Cantidad de escuelas privadas por habitantes y viviendas por Comuna")
 ```
+
+# Conclusiones
+
+**Respecto a los datos obtenidos de la base de escuelas:**
+
+## Cantidad de escuelas totales por comuna
+
+* Las comunas 4 y 1 son las que tienen mayor cantidad de escuelas.
+* Las comunas 2 y 6 son las que tienen menor cantidad de escuelas.
+
+## Cantidad de escuelas privadas por comuna
+
+* Las comunas 13 y 1 son las que tienen más cantidad de escuelas privadas con 120 y 113 escuelas, seguidas por las comunas 3 y 14 con 84 escuelas privadas cada una.
+* Las comunas con menor cantidad de escuelas privadas son las comunas 8, 9 y 10.
+
+
+**Respecto a los datos cruzados por cantidad de habitantes:**
+
+## Cantidad de escuelas totales por cantidad de habitantes
+
+* Las comunas 1 y 4 son las de mayor cantidad de escuelas totales por cada 1000 habitantes
+* Las comunas 1 y 13 son las de mayor cantidad de escuelas privadas por cada 1000 habitantes.
+
+
+**Respecto del proceso de elaboración del trabajo**
+
+Tomé la base de escuelas por ser una base que tiene datos georeferenciados, más allá de que en este trabajo no se haya tenido en cuenta esa información. La pude cruzar con la base del censo2010 para tener una noción de la cantidad de escuelas en relación a la población y cantidad de viviendas. Para el trabajo con el módulo siguiente será interesante ver la distribución de escuelas en el territorio y cómo se distribuyen geográficamente los índices calculados.
+
+El procesamiento de los datos no fue complejo siguiendo los ejemplos de las clases y el material disponible en el campus, pero tuve que consultar documentación para algunas funciones puntuales que me permitieron filtrar elementos, construir nuevas columnas y algunas características sobre los gráficos y el orden de la información.
