@@ -2,7 +2,7 @@
 title: "Proyecto Ciencia de Datos I"
 author: "Maxi Urso"
 date: "2023-07-09"
-output: html_document
+output: github_document
 ---
 
 Voy a trabajar con la base de datos de establecimientos educativos disponible en BA Data.
@@ -273,6 +273,8 @@ ggplot(escuelas_poblacion, aes(y = reorder(nombre,comuna))) +
   scale_fill_manual(values = c("Mil viviendas" = "steelblue", "Mil habitantes" = "darkorange")) +
   ggtitle("Cantidad de escuelas por habitantes y viviendas por Comuna")
 ```
+
+
 ## Escuelas privadas por comuna
 
 Filtro para quedarme con sólo las escuelas con dependencia funcional "Dirección General de Educación de Gestión Privada"
