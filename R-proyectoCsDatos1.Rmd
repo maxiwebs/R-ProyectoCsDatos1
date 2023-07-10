@@ -2,8 +2,8 @@
 title: "Proyecto Ciencia de Datos I"
 author: "Maxi Urso"
 date: "2023-07-09"
-#output: github_document
-output: html_document
+output: github_document
+#output: html_document
 ---
 
 Voy a trabajar con la base de datos de establecimientos educativos disponible en BA Data.
@@ -22,7 +22,6 @@ knitr::opts_chunk$set(echo = TRUE)
 # Importo librerías
 ```{r message=FALSE}
 library(tidyverse)
-library(sf)
 library(ggplot2)
 ```
 

@@ -21,7 +21,6 @@ git](https://github.com/maxiwebs/R-ProyectoCsDatos1/).
 
 ``` r
 library(tidyverse)
-library(sf)
 library(ggplot2)
 ```
 
