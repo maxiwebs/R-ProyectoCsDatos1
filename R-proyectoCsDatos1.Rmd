@@ -9,9 +9,7 @@ Voy a trabajar con la base de datos de establecimientos educativos disponible en
 
 Además si bien el join no es algo que vimos en este módulo, para poder hacer algunas operaciones extra, voy a unirla con la base de datos del censo 2010 para amba facilitada en este curso.
 
-Los datos están disponibles en el repositorio git:
-
-
+Los datos están disponibles en el [repositorio git](https://github.com/maxiwebs/R-ProyectoCsDatos1/).
 
 
 ```{r setup, include=FALSE}
